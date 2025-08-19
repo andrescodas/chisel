@@ -1,6 +1,10 @@
 # build stage
-FROM golang:alpine AS build
-RUN apk update && apk add git
+FROM mcr.microsoft.com/oss/go/microsoft/golang:latest AS build
+RUN apt-get update \
+ && apt-get install git ca-certificates \
+ && apt-get autoremove \
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/* 
 ADD . /src
 WORKDIR /src
 ENV CGO_ENABLED=0
